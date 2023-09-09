@@ -1,19 +1,20 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/vlnevyhosteny/go-monitor-service/endpointmonitoring"
+	"github.com/vlnevyhosteny/go-monitor-service/server"
 )
 
+var controllers = []server.EchoController{endpointmonitoring.PostEndpointMonitoringController}
+
 func main() {
-	server := echo.New()
+	e := echo.New()
 
-	server.Use(middleware.Logger())
+	e.Use(middleware.Logger())
 
-	server.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-	server.Logger.Fatal(server.Start(":3000"))
+	server.AddControllers(e, controllers)
+
+	e.Logger.Fatal(e.Start(":3000"))
 }
