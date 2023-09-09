@@ -6,7 +6,7 @@ import (
 )
 
 type Endpoint struct {
-	ID   uuid.UUID        `json:"id"`
-	Name string           `json:"name"`
-	Url  valueobjects.Url `json:"url"`
+	ID      uuid.UUID            `json:"id"`
+	Name    string               `json:"name"`
+	Address valueobjects.Address `json:"Address"`
 }
