@@ -7,6 +7,5 @@ import (
 
 type Monitoring struct {
 	ID       uuid.UUID             `json:"id"`
-	Name     string                `json:"name"`
 	Schedule valueobjects.Schedule `json:"schedule"`
 }

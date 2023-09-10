@@ -1,6 +1,10 @@
 package server
 
-import "github.com/labstack/echo/v4"
+import (
+	"reflect"
+
+	"github.com/labstack/echo/v4"
+)
 
 type RequestMethod int
 
@@ -15,12 +19,15 @@ type EchoController interface {
 	GetMethod() RequestMethod
 	GetPath() string
 	GetHandler() func(c echo.Context) error
+	ValidateBody() bool
+	GetBodyType() reflect.Type
 }
 
 type Controller struct {
 	Method  RequestMethod
 	Path    string
 	Handler func(c echo.Context) error
+	Body    reflect.Type
 }
 
 func (c Controller) GetMethod() RequestMethod {
@@ -33,4 +40,12 @@ func (c Controller) GetPath() string {
 
 func (c Controller) GetHandler() func(c echo.Context) error {
 	return c.Handler
+}
+
+func (c Controller) ValidateBody() bool {
+	return c.Body != nil
+}
+
+func (c Controller) GetBodyType() reflect.Type {
+	return c.Body
 }
